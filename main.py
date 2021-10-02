@@ -38,8 +38,8 @@ def plus_minus(strs_without_multipl):
         i = not_readystr.find('*')
 
 
-def check_problems(s):
-    b = True
+def check_mistake(s):
+    b = False
 
     d ={
         '+': 1,
@@ -48,11 +48,13 @@ def check_problems(s):
         '/': 1
         }
 
-    for i in s:
-        if i.isdigit() == True or i in d:
-            b = True
-        else:
-            b = False
+    for i in range(len(s)-1):
+        if s[i] in d:
+            if s[i+1].isdigit() == True:
+                b = True
+            else:
+                return False
+
     return b
 
 def solve(strs):
@@ -64,10 +66,14 @@ def solve(strs):
 
     return out
 
+
+
 s = str(input())
 
-while check_problems(s) != True:
+while check_mistake(s) != True:
     print('Давай, братишка, я верю в тебя :)')
     s = str(input())
 
-print(solve(s))
+print(solve(s.strip()))
+
+
