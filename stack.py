@@ -3,7 +3,7 @@ def check_brackets(s):
     if len(s) == 1:
         return 1
 
-    d = {'(':')', '[':']', '{':'}'}
+    d = {'(': ')', '[': ']', '{': '}'}
     d1 = {'(': 1, ')': 1, '[': 1, ']': 1, '{': 1, '}': 1}
 
     index = []
@@ -17,19 +17,21 @@ def check_brackets(s):
 
 
     stack = []
+    stack_index = []
 
     for i in range(len(strs)):
         if strs[i] in d:
             stack.append(strs[i])
+            stack_index.append(i)
         else:
             if stack == []:
                 return index[i]+1
             top = stack.pop()
+            stack_index.pop()
             if strs[i] != d[top]:
                 return index[i]+1
-
-    if stack != []:
-        return 1
+    if stack_index != []:
+        return int(stack_index.pop()) + 1
 
     return 'Success'
 
