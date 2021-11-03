@@ -34,13 +34,9 @@ def plus_minus(strs_without_multipl):
             processed_number = ''
     return sum
 
-    def multiplication(not_readystr):
-        i = not_readystr.find('*')
-
 
 def check_mistake(s):
-    b = False
-
+    problem = False
     d ={
         '+': 1,
         '-': 1,
@@ -51,24 +47,20 @@ def check_mistake(s):
     for i in range(len(s)-1):
         if s[i] in d:
             if s[i+1].isdigit() == True:
-                b = True
+                problem = True
             else:
                 return False
 
-    return b
+    return problem
 
 def solve(strs):
-
-    out = plus_minus(strs)
-
-# Multiplication coming soon
-#     LOL
-
-    return out
-
+    ans = plus_minus(strs)
+    return ans
 
 
 s = str(input())
+s = s.replace(' ', '')
+
 
 while check_mistake(s) != True:
     print('Давай, братишка, я верю в тебя :)')
