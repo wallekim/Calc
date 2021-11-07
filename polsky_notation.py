@@ -5,25 +5,42 @@ def transformation(expression):
     }
     final_expression = []
     stack = []
-    max_sign = 0
-    for chr in expression:
-        if chr.isdigit():
-            final_expression.append(chr)
-        elif priority_sign[chr] > max_sign:
-            stack.append(chr)
-            max_sign = priority_sign[chr]
-        elif chr == ')' or max_sign >= priority_sign[chr]:
-            while stack[-1] != '(' or max_sign >= priority_sign[chr]:
-                final_expression.append(stack.pop())
-                if stack != []:
-                    max_sign = priority_sign[stack[-1]]
-                else:
-                    max_sign = 0
-            stack.pop()
+    for element in expression:
+        if element.isdigit():
+            final_expression.append(element)
+        elif stack:
+            if element == '(' or priority_sign[element] > max_sign:
+                stack.append(element)
+                max_sign = priority_sign[element]
+            else:
+                while max_sign >= priority_sign[element] or stack != []:
+
+                    if stack[-1] == '(':
+                        break
+
+                    if max_sign == 1:
+                        stack.pop()
+                    else:
+                        final_expression.append(stack.pop())
+
+                    if stack:
+                        max_sign = priority_sign[stack[-1]]
+                    else:
+                        max_sign = 0
+
+                stack.append(element)
+
+        else:
+            stack.append(element)
+            max_sign = priority_sign[element]
     while stack:
-        final_expression.append(stack.pop())
+        if priority_sign[stack[-1]] == 1:
+            stack.pop()
+        else:
+            final_expression.append(stack.pop())
 
     return final_expression
 
 
-print(transformation('(1+2)*4+3'))
+if __name__ == '__main__':
+    print(transformation('(1+2)*4+3'))
