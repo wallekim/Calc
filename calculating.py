@@ -20,9 +20,10 @@ def calculate(expression):
                 '/':   first / second if second != 0 else "Деление на 0!",
                          }[i])
 
-    return stack
+    return int(stack[-1])
+
 
 lst = ['1','2', '+', '4', '*', '3', '+']
 
 if __name__ == '__main__':
-    print(*calculate(lst))
+    print(calculate(lst))

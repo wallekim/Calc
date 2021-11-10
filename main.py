@@ -1,24 +1,18 @@
 import brackets
-import pluse_minus
-import polsky_notation
+import notation
 import calculating
-import re
 
 
 def check_mistake(expression):
     expression = expression.replace(' ', '')
-    operations = set('+-/*')
-    if brackets.check_brackets(expression):
-        problem = False
-
-        for i in range(len(expression) - 1):
-            if expression[i] in operations:
-                if expression[i + 1].isdigit():
-                    problem = True
-                else:
-                    return False
-
-        return problem
+    operations = set('+-/*()')
+    for i in range(len(expression) - 1):
+        if expression[i] in operations and expression[i + 1].isdigit():
+            problem = True
+        else:
+            return False
+    problem = brackets.check_brackets(expression)
+    return problem
 
 
 def spliter(expression):
@@ -38,7 +32,7 @@ def spliter(expression):
 
 
 def solve(expression):
-    ans = calculating.calculate(polsky_notation.transformation(expression))
+    ans = calculating.calculate(notation.transformation(expression))
     return ans
 
 

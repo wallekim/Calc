@@ -19,7 +19,7 @@ def plus_minus(expression):
     processed_number = ''
     sign = True
 
-    while i < len(expression)-1:
+    while i < len(expression) - 1:
         if expression[i] == '-':
             sign = False
             i += 1

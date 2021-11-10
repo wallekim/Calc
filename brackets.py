@@ -22,13 +22,13 @@ def check_brackets(s):
             stack.append(strs[i])
             stack_index.append(i)
         else:
-            if stack == []:
+            if not stack:
                 return False
             top = stack.pop()
             stack_index.pop()
             if strs[i] != d[top]:
                 return False
-    if stack_index != []:
+    if stack_index:
         return False
 
     return True
