@@ -1,5 +1,4 @@
 import logging
-import brackets
 import notation
 import calculating
 
@@ -12,18 +11,6 @@ logging.basicConfig(
     ]
 )
 log = logging.getLogger(__name__)
-
-
-def check_mistake(expression):
-    expression = expression.replace(' ', '')
-    operations = set('+-/*()')
-    for i in range(len(expression) - 1):
-        if expression[i] in operations and expression[i + 1].isdigit():
-            problem = True
-        else:
-            return False
-    problem = brackets.check_brackets(expression)
-    return problem
 
 
 def spliter(expression):
@@ -43,19 +30,26 @@ def spliter(expression):
 
 
 def solve(expression):
-    ans = calculating.calculate(notation.transformation(expression))
-    return ans
+    log.info(calculating.calculate(notation.transformation(expression)))
 
 
 s = str(input())
-
-
-# while not check_mistake(s):
-#     print('Давай, братишка, я верю в тебя :)')
-#     s = str(input())
-
 s = s.strip()
 s = s.replace(' ', '')
 s = spliter(s)
 
-log.info(solve(s))
+again = True
+
+while again:
+    try:
+        again = False
+        solve(s)
+    except BaseException:
+        again = True
+        print('Try again')
+        s = str(input())
+        s = s.strip()
+        s = s.replace(' ', '')
+        s = spliter(s)
+
+
