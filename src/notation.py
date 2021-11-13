@@ -20,6 +20,10 @@ def transformation(expression):
                     final_expression.append(stack.pop())
                     max_sign = priority_sign[stack[-1]]
                 stack.pop()
+                if stack:
+                    max_sign = priority_sign[stack[-1]]
+                else:
+                    max_sign = 0
 
             elif max_sign >= priority_sign[element]:
                 while max_sign >= priority_sign[element]:
@@ -37,3 +41,7 @@ def transformation(expression):
         final_expression.append(stack.pop())
 
     return final_expression
+
+
+if __name__ == '__main__':
+    print(transformation(['(', '(', '2', '+', '2', ')', '*', '(', '3', '*', '3', ')', '+', '1', ')', '*', '9']))

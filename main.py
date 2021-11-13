@@ -1,7 +1,5 @@
 import logging
-import notation
-import calculating
-
+from src import delimiter, notation, calculating
 
 logging.basicConfig(
     level=logging.INFO,
@@ -13,22 +11,6 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
-def spliter(expression):
-    total = []
-    value = str()
-    operations = set('+-/*()')
-    for element in expression:
-        if element.isdigit():
-            value += element
-        elif element in operations:
-            if value != '':
-                total.append(value.strip())
-            total.append(element)
-            value = ''
-    total.append(value)
-    return total
-
-
 def solve(expression):
     log.info(calculating.calculate(notation.transformation(expression)))
 
@@ -36,12 +18,12 @@ def solve(expression):
 s = str(input())
 s = s.strip()
 s = s.replace(' ', '')
-s = spliter(s)
 
 again = True
 
 while again:
     try:
+        s = delimiter.split_(s)
         again = False
         solve(s)
     except BaseException:
@@ -50,6 +32,6 @@ while again:
         s = str(input())
         s = s.strip()
         s = s.replace(' ', '')
-        s = spliter(s)
+        s = delimiter.split_(s)
 
 
