@@ -1,5 +1,5 @@
 import logging
-from src import delimiter, notation, calculating
+from src import separator, notation, calculating
 
 logging.basicConfig(
     level=logging.INFO,
@@ -16,22 +16,16 @@ def solve(expression):
 
 
 s = str(input())
-s = s.strip()
-s = s.replace(' ', '')
 
 again = True
 
 while again:
     try:
-        s = delimiter.split_(s)
+        s = separator.split_(s)
         again = False
         solve(s)
     except BaseException:
         again = True
         print('Try again')
         s = str(input())
-        s = s.strip()
-        s = s.replace(' ', '')
-        s = delimiter.split_(s)
-
-
+        s = separator.split_(s)

@@ -7,7 +7,7 @@ priority_sign = {
 def transformation(expression):
     final_expression = []
     stack = []
-    for element in expression:
+    for index, element in enumerate(expression):
         if element.isdigit():
             final_expression.append(element)
         elif stack:
@@ -20,18 +20,12 @@ def transformation(expression):
                     final_expression.append(stack.pop())
                     max_sign = priority_sign[stack[-1]]
                 stack.pop()
-                if stack:
-                    max_sign = priority_sign[stack[-1]]
-                else:
-                    max_sign = 0
+                max_sign = priority_sign[stack[-1]] if stack else 0
 
             elif max_sign >= priority_sign[element]:
                 while max_sign >= priority_sign[element]:
                     final_expression.append(stack.pop())
-                    if stack:
-                        max_sign = priority_sign[stack[-1]]
-                    else:
-                        max_sign = 0
+                    max_sign = priority_sign[stack[-1]] if stack else 0
                 stack.append(element)
                 max_sign = priority_sign[element]
         else:
@@ -44,4 +38,4 @@ def transformation(expression):
 
 
 if __name__ == '__main__':
-    print(transformation(['(', '(', '2', '+', '2', ')', '*', '(', '3', '*', '3', ')', '+', '1', ')', '*', '9']))
+    print(*transformation('0 + 22 + 2'.split()))
