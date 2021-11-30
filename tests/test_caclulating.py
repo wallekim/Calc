@@ -14,9 +14,6 @@ class TestCalc(unittest.TestCase):
         test_in = '20 56 -'.split()                             # 20 - 56
         self.assertEqual(calculating.calculate(test_in), -36)
 
-        test_in = '20 - 56 -'.split()                           # -20 - 56
-        self.assertEqual(calculating.calculate(test_in), -76)
-
         test_in = '2 5 - 4 - 1 - 5 -'.split()                   # 2-5-4-1-5
         self.assertEqual(calculating.calculate(test_in), -13)
 

@@ -1,28 +1,39 @@
-operations = set('+-*/')
+from math import factorial, sin, cos, tan, atan
+
+operations = set('+-*/!^')
+left_assoc = {'cos', 'tan', 'sin', 'atan'}
+
+operators = {
+        "+": lambda x, y: x + y,
+        "-": lambda x, y: x - y,
+        "/": lambda x, y: x / y,
+        "*": lambda x, y: x * y,
+        '^': lambda x, y: x ** y,
+        'cos': lambda x: cos(x),
+        'sin': lambda x: sin(x),
+        'tan': lambda x: tan(x),
+        'atan': lambda x: atan(x),
+        '!': lambda x: factorial(x)
+}
 
 
 def calculate(expression):
     stack = []
-    for i in expression:
-        if i.isdigit():
-            stack.append(i)
-        elif i in operations:
+    for element in expression:
+        if element.isdigit():
+            stack.append(element)
+        elif element in left_assoc:
             second = float(stack.pop())
-            if not stack and i == '-':
-                first = 0
-            else:
-                first = float(stack.pop())
-            stack.append({
-                '+':   first + second,
-                '-':   first - second,
-                '*':   first * second,
-                '/':   first / second if second != 0 else ZeroDivisionError,
-                         }[i])
+            stack.append(operators[element](second))
+        else:
+            second = float(stack.pop())
+            first = float(stack.pop())
+            stack.append(operators[element](first, second))
 
     return float(stack[-1])
 
 
-lst = '0 22 + 2 +'.split()
+lst = '30 sin 0 + 22 + 343 - 22 - 343 +'.split()
 
 if __name__ == '__main__':
     print(calculate(lst))

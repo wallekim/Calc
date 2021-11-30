@@ -1,36 +1,38 @@
 priority_sign = {
+    'cos': 5, 'sin': 5,
+    '^': 4,
     '*': 3, '+': 2, '(': 1,
     '/': 3, '-': 2, ')': 1
 }
+
+left_assoc = {'cos', 'tan', 'sin', 'atan'}
 
 
 def transformation(expression):
     final_expression = []
     stack = []
-    for index, element in enumerate(expression):
-        if element.isdigit():
+    max_sign = 0
+    for element in expression:
+        if element.isdigit() or element == '!':
             final_expression.append(element)
-        elif stack:
-            if element == '(' or priority_sign[element] > max_sign:
-                stack.append(element)
-                max_sign = priority_sign[element]
 
-            elif element == ')':
-                while stack[-1] != '(':
-                    final_expression.append(stack.pop())
-                    max_sign = priority_sign[stack[-1]]
-                stack.pop()
-                max_sign = priority_sign[stack[-1]] if stack else 0
-
-            elif max_sign >= priority_sign[element]:
-                while max_sign >= priority_sign[element]:
-                    final_expression.append(stack.pop())
-                    max_sign = priority_sign[stack[-1]] if stack else 0
-                stack.append(element)
-                max_sign = priority_sign[element]
-        else:
+        elif element == '(' or priority_sign[element] > max_sign or element == '^' or element in left_assoc:
             stack.append(element)
             max_sign = priority_sign[element]
+
+        elif element == ')':
+            while stack[-1] != '(' and stack:
+                final_expression.append(stack.pop())
+            stack.pop()
+            max_sign = priority_sign[stack[-1]] if stack else 0
+
+        else:
+            while max_sign >= priority_sign[element] and stack:
+                final_expression.append(stack.pop())
+                max_sign = priority_sign[stack[-1]] if stack else 0
+            stack.append(element)
+            max_sign = priority_sign[element]
+
     while stack:
         final_expression.append(stack.pop())
 
@@ -38,4 +40,4 @@ def transformation(expression):
 
 
 if __name__ == '__main__':
-    print(*transformation('0 + 22 + 2'.split()))
+    print(*transformation('sin ( 30 ) + 0 + 22 - 343 - 22 + 343'.split()))

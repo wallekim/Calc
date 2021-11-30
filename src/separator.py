@@ -3,8 +3,9 @@ def append_value(val, lst):
         lst.append(val)
 
 
-operations = set('+-/*()')
+operations = set('+-/*()^')
 unary_operation = set('+-')
+left_assoc = {'cos', 'tan', 'sin', 'atan'}
 
 
 def split_(expression):
@@ -12,25 +13,38 @@ def split_(expression):
     total = []
     op_count = 0
     value = ''
-    val_oper = bool()
+    digit = False
+    bracket = False
+    some_oper = ''
 
     for i in range(len(expression)):
         if expression[i].isdigit():
             value += expression[i]
-            val_oper = True
+            digit = True
+            bracket = False
         elif expression[i] in operations:
             append_value(value.strip(), total)
+            some_oper = ''
 
-            if expression[i] in unary_operation and (not val_oper and expression[i-1] != ')'):
+            if expression[i] in unary_operation and not digit and not bracket:
                 total.append('0')
 
+            bracket = True if expression[i] == ')' else False
+
             total.append(expression[i])
-            val_oper = False
+            digit = False
             value = ''
             op_count += 1
+        elif expression[i].isalpha():
+            some_oper += expression[i]
+            if some_oper in left_assoc:
+                total.append(some_oper)
+                op_count += 1
+            bracket = False
         elif expression[i] == ' ':
             append_value(value.strip(), total)
             value = ''
+            some_oper = ''
         else:
             raise BaseException
 
@@ -42,4 +56,4 @@ def split_(expression):
 
 
 if __name__ == '__main__':
-    print(*split_('+22+2'))
+    print(*split_('sin(30)+0+22-343-22+343'))
