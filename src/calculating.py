@@ -1,7 +1,7 @@
 from math import factorial, sin, cos, tan, atan
 
-operations = set('+-*/!^')
-left_assoc = {'cos', 'tan', 'sin', 'atan'}
+operations = set('+-*/^')
+left_assoc = {'cos', 'tan', 'sin', 'atan', '!'}
 
 operators = {
         "+": lambda x, y: x + y,
@@ -33,7 +33,7 @@ def calculate(expression):
     return float(stack[-1])
 
 
-lst = '30 sin 0 + 22 + 343 - 22 - 343 +'.split()
+lst = '30 sin 0 + 22 + 343 - 22 - 8 ! +'.split()
 
 if __name__ == '__main__':
     print(calculate(lst))

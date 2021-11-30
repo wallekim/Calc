@@ -40,4 +40,4 @@ def transformation(expression):
 
 
 if __name__ == '__main__':
-    print(*transformation('sin ( 30 ) + 0 + 22 - 343 - 22 + 343'.split()))
+    print(*transformation('sin ( 30 ) + 0 + 22 - 343 - 22 + 343 !'.split()))
