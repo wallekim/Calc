@@ -56,4 +56,4 @@ def split_(expression):
 
 
 if __name__ == '__main__':
-    print(*split_('sin(30)+0+22-343-22+343!'))
+    print(*split_('s 9'))
